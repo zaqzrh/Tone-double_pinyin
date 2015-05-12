@@ -1,0 +1,215 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: td_pinyin_pyjj
+  name: 帶調拼音加加雙拼
+  version: "0.01"
+  author:
+    - 佛振 <chen.sst@gmail.com>
+    - Ye Zhou
+    - zaqzrh
+  description: |
+    地球拼音＋拼音加加雙拼方案。
+  dependencies:
+    #- stroke
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - script_translator
+  filters:
+    - reverse_lookup_filter
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: 'zyxwvutsrqponmlkjihgfedcba-;/<,>\'
+  initials: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+  algebra:
+    - erase/^xx$/
+    - derive/^([jqxy])u$/$1v/
+    - derive/^([aoe].*)([0-5])$/o$1$2/
+    - xform/^([ae])(.*)([0-5])$/$1$1$2$3/
+    - xform/iu([0-5])$/N$1/
+    - xform/[iu]a([0-5])$/B$1/
+    - xform/er([0-5])$|ing([0-5])$/Q$1/
+    - xform/[uv]an([0-5])$/C$1/
+    - xform/[uv]e([0-5])$|uai([0-5])$/X$1/
+    - xform/^sh/I/
+    - xform/^ch/U/
+    - xform/^zh/V/
+    - xform/uo([0-5])$/O$1/
+    - xform/[uv]n([0-5])$/Z$1/
+    - xform/i?ong([0-5])$/Y$1/
+    - xform/[iu]ang([0-5])$/H$1/
+    - xform/(.)en([0-5])$/$1R$2/
+    - xform/(.)eng([0-5])$/$1T$2/
+    - xform/(.)ang([0-5])$/$1G$2/
+    - xform/ian([0-5])$/J$1/
+    - xform/(.)an([0-5])$/$1F$2/
+    - xform/iao([0-5])$/K$1/
+    - xform/(.)ao([0-5])$/$1D$2/
+    - xform/(.)ai([0-5])$/$1S$2/
+    - xform/(.)ei([0-5])$/$1W$2/
+    - xform/ie([0-5])$/M$1/
+    - xform/ui([0-5])$/V$1/
+    - xform/(.)ou([0-5])$/$1P$2/
+    - xform/in([0-5])$/L$1/
+    - xlit/QWRTYUIOPSDFGHMJCKLZXVBN/qwrtyuiopsdfghmjcklzxvbn/
+    - abbrev/^(.).+$/$1/
+    - derive/^([a-z]+)[0-5]$/$1/
+    - 'xlit 1234 -/<\'
+    - 'derive/^(.*)-$/$1;/'
+    - 'derive/^(.*)<$/$1,/'
+    - 'derive/^(.*)\\$/$1>/'
+
+translator:
+  dictionary: terra_pinyin
+  prism: td_pinyin_pyjj
+  preedit_format:
+    - xform/([aoe])(\w)/0$2/
+    - xform/([bpmnljqxy])l/$1IN/
+    - xform/(\w)t/$1ENG/
+    - xform/(\w)n/$1IU/
+    - xform/([gkhvuirzcs])b/$1UA/
+    - xform/(\w)b/$1IA/
+    - xform/([dtnlgkhjqxyvuirzcs])c/$1UAN/
+    - xform/0r/ER/
+    - xform/([dtgkhvuirzcs])v/$1UI/
+    - xform/(\w)v/$1V/
+    - xform/([gkhvuirzcs])x/$1UAI/
+    - xform/(\w)x/$1VE/
+    - xform/([dtnlgkhvuirzcs])o/$1UO/
+    - xform/(\w)z/$1UN/
+    - xform/([jqx])y/$1IONG/
+    - xform/(\w)y/$1ONG/
+    - xform/([jqxnl])h/$1IANG/
+    - xform/(\w)h/$1UANG/
+    - xform/(\w)r/$1EN/
+    - xform/(\w)g/$1ANG/
+    - xform/(\w)f/$1AN/
+    - xform/(\w)d/$1AO/
+    - xform/(\w)s/$1AI/
+    - xform/(\w)w/$1EI/
+    - xform/(\w)m/$1IE/
+    - xform/(\w)k/$1IAO/
+    - xform/(\w)p/$1OU/
+    - xform/(\w)j/$1IAN/
+    - xform/(0)q/$1ER/
+    - xform/(\w)q/$1ING/
+    - xform/0(\w)/$1/
+    - xlit/QWRTYUIOPSDFGHMJCKLZXVBNAEIOU/qwrtyuiopsdfghmjcklzxvbnaeiou/
+    - "xform/(^|[ '])v/$1zh/"
+    - "xform/(^|[ ‘])u/$1ch/"
+    - "xform/(^|[ ‘])i/$1sh/"
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+    - xform/eh/ê/
+    - 'xform ([aeiou])(ng?|r)([-;/<,>\\]) $1$3$2'
+    - 'xform ([aeo])([iuo])([-;/<,>\\]) $1$3$2'
+    - 'xform a[-;] ā'
+    - 'xform a/ á'
+    - 'xform a[<,] ǎ'
+    - 'xform a[>\\] à'
+    - 'xform e[-;] ē'
+    - 'xform e/ é'
+    - 'xform e[<,] ě'
+    - 'xform e[>\\] è'
+    - 'xform o[-;] ō'
+    - 'xform o/ ó'
+    - 'xform o[<,] ǒ'
+    - 'xform o[>\\] ò'
+    - 'xform i[-;] ī'
+    - 'xform i/ í'
+    - 'xform i[<,] ǐ'
+    - 'xform i[>\\] ì'
+    - 'xform u[-;] ū'
+    - 'xform u/ ú'
+    - 'xform u[<,] ǔ'
+    - 'xform u[>\\] ù'
+    - 'xform ü[-;] ǖ'
+    - 'xform ü/ ǘ'
+    - 'xform ü[<,] ǚ'
+    - 'xform ü[>\\] ǜ'
+  comment_format:
+    - xform ([aeiou])(ng?|r)([1234]) $1$3$2
+    - xform ([aeo])([iuo])([1234]) $1$3$2
+    - xform a1 ā
+    - xform a2 á
+    - xform a3 ǎ
+    - xform a4 à
+    - xform e1 ē
+    - xform e2 é
+    - xform e3 ě
+    - xform e4 è
+    - xform o1 ō
+    - xform o2 ó
+    - xform o3 ǒ
+    - xform o4 ò
+    - xform i1 ī
+    - xform i2 í
+    - xform i3 ǐ
+    - xform i4 ì
+    - xform u1 ū
+    - xform u2 ú
+    - xform u3 ǔ
+    - xform u4 ù
+    - xform v1 ǖ
+    - xform v2 ǘ
+    - xform v3 ǚ
+    - xform v4 ǜ
+    - xform/([nljqxy])v/$1ü/
+    - xform/eh[0-5]?/ê/
+    - xform/([a-z]+)[0-5]/$1/
+
+reverse_lookup:
+  dictionary: stroke
+  enable_completion: true
+  prefix: "`"
+  suffix: "'"
+  tips: 〔筆畫〕
+  preedit_format:
+    - xlit/hspnz/一丨丿丶乙/
+  comment_format:
+    - xform/([nl])v/$1ü/
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*'?$"
