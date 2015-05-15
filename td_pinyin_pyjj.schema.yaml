@@ -61,9 +61,9 @@ speller:
     - xform/^([ae])(.*)([0-5])$/$1$1$2$3/
     - xform/iu([0-5])$/N$1/
     - xform/[iu]a([0-5])$/B$1/
-    - xform/er([0-5])$|ing([0-5])$/Q$1/
+    - xform/(er|ing)([0-5])$/Q$2/
     - xform/[uv]an([0-5])$/C$1/
-    - xform/[uv]e([0-5])$|uai([0-5])$/X$1/
+    - xform/([uv]e|uai)([0-5])$/X$2/
     - xform/^sh/I/
     - xform/^ch/U/
     - xform/^zh/V/
