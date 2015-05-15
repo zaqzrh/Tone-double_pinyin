@@ -70,7 +70,7 @@ speller:
     - xform/uo([0-5])$/O$1/
     - xform/ie([0-5])$/P$1/
     - xform/i?ong([0-5])$/S$1/
-    - xform/ing([0-5])$|uai([0-5])$/K$1/
+    - xform/(ing|uai)([0-5])$/K$2/
     - xform/(.)ai([0-5])$/$1D$2/
     - xform/(.)en([0-5])$/$1F$2/
     - xform/(.)eng([0-5])$/$1G$2/
