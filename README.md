@@ -11,8 +11,8 @@ td_pinyin.schema.yaml
 td_pinyin_abc.schema.yaml   
 “带调智能ABC双拼”    默认声调;/,\符号为1234声
 
-td_pinyin_flypy.schema.yaml 
-“带调小鹤双拼”       默认声调;/,\符号为1234声
+td_pinyin_flypy.schema.yaml   
+“带调小鹤双拼”    默认声调;/,\符号为1234声
 
 td_pinyin_mspy.schema.yaml  
 “带调MSPY双拼”       默认声调-/,\符号为1234声(;=ing)
