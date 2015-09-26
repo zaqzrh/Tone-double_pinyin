@@ -25,7 +25,7 @@ td_pinyin_pyjj.schema.yaml
 
 2、符号;,./[']\-=（MSPY双拼方案使用了;键）
 
-3、字母aeovui（要点:O导零声母，新华双拼还用wyx作声调]
+3、字母aeovui（要点:O导零声母，zh(z)\ch(c)\sh(s)模糊音,新华双拼还用wyx作声调]
 
 4、`(grave),Tab,CapsLock,Shift_L,Shift_R作五声 
 
